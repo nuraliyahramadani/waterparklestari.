@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Waterpark Lestari - Virtual Tour 360° Tomoni</title>
+  <meta name="description" content="Website virtual tour berbasis panorama 360° Waterpark Lestari, Tomoni, Luwu Timur. Jelajahi suasana, wahana air, fasilitas, dan tiket masuk sebelum datang langsung.">
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            outfit: ['"Outfit"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              teal: '#0a3138',
+              deepTeal: '#06242a',
+              darkBg: '#051d22',
+              accentYellow: '#f5a623',
+              accentYellowLight: '#ffbe42',
+              orangeCta: '#fa5f38',
+              orangeCtaHover: '#ea4f28',
+              creamCard: '#fdfbf7',
+              cyanBadge: '#dcf5f2',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Pannellum 360 Panorama Viewer CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-[#051d22] text-slate-100 font-sans antialiased selection:bg-brand-accentYellow selection:text-slate-900">
+
+  <!-- ================= NAVBAR ================= -->
+  <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-[#06242a]/90 backdrop-blur-md border-b border-teal-900/40" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Logo -->
+      <a href="#beranda" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-500 to-amber-300 flex items-center justify-center shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform">
+          <!-- Wave Icon SVG -->
+          <svg class="w-6 h-6 text-slate-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 12c2.5-3 5.5-3 8 0s5.5 3 8 0 5.5-3 8 0"></path>
+            <path d="M2 17c2.5-3 5.5-3 8 0s5.5 3 8 0 5.5-3 8 0"></path>
+          </svg>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-extrabold text-white text-lg tracking-tight leading-none group-hover:text-amber-300 transition-colors">Waterpark Lestari</span>
+          <span class="text-[10px] tracking-widest uppercase font-semibold text-teal-300/80 mt-1">VIRTUAL TOUR • TOMONI</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Menu -->
+      <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-200">
+        <a href="#beranda" class="hover:text-amber-400 transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-amber-400 after:scale-x-100">Beranda</a>
+        <a href="#virtual-tour" class="hover:text-amber-400 transition-colors py-1">Virtual Tour</a>
+        <a href="#wahana" class="hover:text-amber-400 transition-colors py-1">Wahana & Fasilitas</a>
+        <a href="#tiket" class="hover:text-amber-400 transition-colors py-1">Tiket & Jam</a>
+        <a href="#lokasi" class="hover:text-amber-400 transition-colors py-1">Lokasi</a>
+        <a href="#galeri" class="hover:text-amber-400 transition-colors py-1">Galeri</a>
+        <a href="#kontak" class="hover:text-amber-400 transition-colors py-1">Kontak</a>
+      </nav>
+
+      <!-- CTA Buttons -->
+      <div class="hidden sm:flex items-center gap-3">
+        <button onclick="openBookingModal()" class="bg-[#f6a834] hover:bg-[#ffb947] text-[#051e23] font-bold text-xs sm:text-sm px-5 py-2.5 rounded-full shadow-md shadow-amber-500/20 transition-all hover:scale-105 flex items-center gap-1.5">
+          <i data-lucide="ticket" class="w-4 h-4"></i>
+          <span>Pesan Tiket</span>
+        </button>
+
+        <button onclick="openVirtualTourModal(0)" class="bg-[#fa5f38] hover:bg-[#ea4f28] text-white font-semibold text-xs sm:text-sm px-5 py-2.5 rounded-full shadow-lg shadow-orange-500/25 transition-all hover:shadow-orange-500/40 hover:-translate-y-0.5 flex items-center gap-2">
+          <span>Mulai Virtual Tour</span>
+        </button>
+      </div>
+
+      <!-- Mobile Menu Toggle Button -->
+      <button id="mobileMenuBtn" class="lg:hidden p-2 rounded-lg text-slate-300 hover:text-white hover:bg-teal-900/40" aria-label="Menu navigasi">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+
+    </div>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobileMenu" class="hidden lg:hidden bg-[#06242a] border-b border-teal-800/50 px-6 py-5 space-y-3">
+      <a href="#beranda" class="block text-slate-200 hover:text-amber-400 font-medium py-2 border-b border-teal-900/60 mobile-link">Beranda</a>
+      <a href="#virtual-tour" class="block text-slate-200 hover:text-amber-400 font-medium py-2 border-b border-teal-900/60 mobile-link">Virtual Tour</a>
+      <a href="#wahana" class="block text-slate-200 hover:text-amber-400 font-medium py-2 border-b border-teal-900/60 mobile-link">Wahana & Fasilitas</a>
+      <a href="#tiket" class="block text-slate-200 hover:text-amber-400 font-medium py-2 border-b border-teal-900/60 mobile-link">Tiket & Jam</a>
+      <a href="#lokasi" class="block text-slate-200 hover:text-amber-400 font-medium py-2 border-b border-teal-900/60 mobile-link">Lokasi</a>
+      <a href="#galeri" class="block text-slate-200 hover:text-amber-400 font-medium py-2 border-b border-teal-900/60 mobile-link">Galeri</a>
+      <a href="#kontak" class="block text-slate-200 hover:text-amber-400 font-medium py-2 mobile-link">Kontak</a>
+      <div class="pt-3">
+        <button onclick="openVirtualTourModal(0)" class="w-full bg-[#fa5f38] hover:bg-[#ea4f28] text-white font-semibold text-center py-3 rounded-full shadow-lg">
+          Mulai Virtual Tour 360°
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= HERO SECTION (MATCHES SCREENSHOT) ================= -->
+  <section id="beranda" class="relative min-h-screen pt-28 pb-16 lg:pt-36 lg:pb-24 flex items-center overflow-hidden hero-gradient-bg">
+    <!-- Ambient Light & Vignette Overlays -->
+    <div class="absolute inset-0 bg-radial-gradient pointer-events-none opacity-60"></div>
+    <div class="absolute -top-32 -left-32 w-96 h-96 bg-teal-400/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-1/2 right-0 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        
+        <!-- Left Hero Content -->
+        <div class="lg:col-span-7 flex flex-col items-start z-10">
+          
+          <!-- Location Badge / Pill Tag -->
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0a2f36]/70 border border-[#1b5863] text-[11px] font-semibold text-[#82c5be] tracking-wider uppercase mb-7 backdrop-blur-sm shadow-inner">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#f6a834]"></span>
+            <span>Objek Wisata Air</span>
+            <span class="text-teal-500">•</span>
+            <span>Kecamatan Tomoni</span>
+          </div>
+
+          <!-- Hero Headline -->
+          <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-extrabold text-white leading-[1.16] tracking-tight mb-6">
+            Jelajahi Waterpark<br>
+            <span class="text-[#f6a834]">Lestari sebelum</span><br>
+            melangkah ke lokasi.
+          </h1>
+
+          <!-- Hero Paragraph -->
+          <p class="text-[#a5c5c8] text-sm sm:text-base leading-relaxed max-w-xl mb-9 font-normal">
+            Website virtual tour berbasis panorama 360° ini menghadirkan gambaran nyata suasana, wahana, dan fasilitas Waterpark Lestari — supaya calon pengunjung lebih yakin sebelum datang langsung.
+          </p>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-wrap items-center gap-4 mb-14">
+            <!-- Mulai Virtual Tour 360 Button -->
+            <button onclick="openVirtualTourModal(0)" class="bg-[#f6a834] hover:bg-[#ffb947] text-[#051e23] font-bold text-sm sm:text-base px-6 py-3.5 rounded-full flex items-center gap-2.5 shadow-lg shadow-amber-500/20 hover:shadow-amber-500/35 transition-all hover:scale-[1.02] active:scale-[0.98]">
+              <i data-lucide="play" class="w-4 h-4 fill-[#051e23] text-[#051e23]"></i>
+              <span>Mulai Virtual Tour 360°</span>
+            </button>
+
+            <!-- Lihat Wahana Button -->
+            <a href="#wahana" class="bg-[#0b333a]/80 hover:bg-[#12424b] border border-[#1d5b66] text-white font-medium text-sm sm:text-base px-6 py-3.5 rounded-full transition-all hover:border-[#2d7d8c] backdrop-blur-sm">
+              Lihat Wahana
+            </a>
+          </div>
+
+          <!-- Bottom Statistics Counters -->
+          <div class="grid grid-cols-3 gap-6 sm:gap-12 pt-6 w-full max-w-md">
+            <div>
+              <div class="text-2xl sm:text-3xl font-extrabold text-white font-sans">6</div>
+              <div class="text-[10px] sm:text-[11px] font-bold tracking-wider text-[#699a9f] uppercase mt-1">Titik Panorama</div>
+            </div>
+            <div>
+              <div class="text-2xl sm:text-3xl font-extrabold text-white font-sans">360°</div>
+              <div class="text-[10px] sm:text-[11px] font-bold tracking-wider text-[#699a9f] uppercase mt-1">Navigasi Penuh</div>
+            </div>
+            <div>
+              <div class="text-2xl sm:text-3xl font-extrabold text-white font-sans">7</div>
+              <div class="text-[10px] sm:text-[11px] font-bold tracking-wider text-[#699a9f] uppercase mt-1">Halaman Informasi</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Side: Floating Ticket Card & Interactive Preview -->
+        <div class="lg:col-span-5 flex flex-col items-center lg:items-end justify-center z-10 w-full">
+          
+          <!-- Floating Ticket Card (Identical to screenshot) -->
+          <div class="w-full max-w-md bg-[#fcf9f2] text-slate-800 rounded-[28px] p-6 sm:p-7 shadow-2xl shadow-black/40 border border-[#f3eee3] relative group hover:shadow-cyan-500/10 transition-all">
+            <div class="flex items-start gap-4 sm:gap-5">
+              <!-- Ticket Icon Box -->
+              <div class="w-14 sm:w-16 h-14 sm:h-16 rounded-2xl bg-[#ffaa2b] flex items-center justify-center flex-shrink-0 shadow-sm">
+                <!-- Pinkish Ticket Badge inside -->
+                <div class="w-9 h-7 rounded-lg bg-[#f43f5e] flex items-center justify-center shadow-inner">
+                  <div class="w-3.5 h-3.5 rounded-full border-2 border-white/80"></div>
+                </div>
+              </div>
+
+              <!-- Ticket Info Content -->
+              <div class="flex-1">
+                <!-- Header Tag -->
+                <div class="text-[11px] font-bold tracking-widest text-[#50686c] uppercase mb-1">
+                  TIKET MASUK
+                </div>
+
+                <!-- Price Row -->
+                <div class="flex items-baseline flex-wrap gap-1.5 mb-1.5">
+                  <span class="text-2xl sm:text-[29px] font-extrabold text-[#0d2226] tracking-tight">Rp25.000</span>
+                  <span class="text-xs text-[#527075] font-medium">/ anak, mulai dari</span>
+                </div>
+
+                <!-- Subtext -->
+                <p class="text-xs text-[#50686c] leading-snug mb-3.5">
+                  Harga bervariasi menurut hari & usia — <a href="#tiket" class="text-[#135964] underline hover:text-[#0b3e46]">lihat rincian lengkap</a>
+                </p>
+
+                <!-- Clock / Operating Hours Pill Chip -->
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#dcf4f2] text-[#0d4a52] text-xs font-semibold">
+                  <i data-lucide="clock" class="w-3.5 h-3.5 text-[#0d4a52]"></i>
+                  <span>08.00-18.00 WITA</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive 360 Mini Teaser Box -->
+          <div class="w-full max-w-md mt-6 rounded-2xl bg-teal-950/40 border border-teal-700/40 p-4 backdrop-blur-md flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-teal-800/80 flex items-center justify-center text-teal-300">
+                <i data-lucide="compass" class="w-5 h-5 animate-spin-slow"></i>
+              </div>
+              <div>
+                <p class="text-xs font-semibold text-white">Pratinjau Panorama 360°</p>
+                <p class="text-[11px] text-teal-300/80">Putar & lihat suasana kolam</p>
+              </div>
+            </div>
+            <button onclick="openVirtualTourModal(0)" class="text-xs bg-teal-800 hover:bg-teal-700 text-white font-medium px-3.5 py-1.5 rounded-lg border border-teal-600/50 transition-colors">
+              Buka Viewer
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= VIRTUAL TOUR SECTION ================= -->
+  <section id="virtual-tour" class="py-20 bg-[#04171b] border-t border-teal-900/50 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-900/50 border border-teal-700/60 text-xs font-semibold text-teal-300 uppercase tracking-wider mb-3">
+          <i data-lucide="scan" class="w-3.5 h-3.5"></i>
+          <span>Pengalaman Interaktif 360°</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          Jelajahi 6 Titik Panorama Unggulan
+        </h2>
+        <p class="text-slate-300 text-sm sm:text-base mt-3">
+          Pilih sudut pandang di bawah ini untuk memulai tur virtual interaktif. Anda dapat menggeser layar 360 derajat untuk merasakan suasana langsung.
+        </p>
+      </div>
+
+      <!-- 360 Hotspot Cards Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Panorama 1 (Teleport 360 Real Panorama) -->
+        <div class="bg-teal-950/40 rounded-2xl border-2 border-amber-400/70 overflow-hidden hover:border-amber-400 transition-all group flex flex-col shadow-xl shadow-amber-500/10">
+          <div class="relative h-48 overflow-hidden bg-slate-900">
+            <img src="assets/panoramas/depan_thumb.jpg" onerror="this.src='https://hdreye-prod.s3.amazonaws.com/file/62508b6d-fc60-4996-9d29-dc929214cb8b/thumb_8a4a904e-4e41-49f2-bd6d-ff45f9b7b0a6.jpg'" alt="Area Depan Waterpark Lestari 360" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#04171b] via-transparent to-transparent"></div>
+            <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-amber-500/90 backdrop-blur-sm text-[10px] font-black text-slate-950 flex items-center gap-1 shadow-md">
+              <i data-lucide="sparkles" class="w-3 h-3"></i> REAL 360° LOKASI
+            </span>
+            <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-sm text-[11px] font-bold text-amber-400 border border-amber-400/30 flex items-center gap-1">
+              <i data-lucide="eye" class="w-3 h-3"></i> 360°
+            </span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-[10px] uppercase font-bold text-teal-400 bg-teal-900/60 px-2 py-0.5 rounded">Teleport 360 App</span>
+              </div>
+              <h3 class="font-bold text-white text-lg group-hover:text-amber-400 transition-colors">1. Area Depan & Gerbang Utama</h3>
+              <p class="text-xs text-slate-300/80 mt-1 leading-relaxed">Panorama 360° nyata di halaman depan dan pintu masuk Waterpark Lestari Tomoni.</p>
+            </div>
+            <div class="mt-4 space-y-2">
+              <button onclick="openVirtualTourModal(0)" class="w-full py-2.5 px-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-black transition-all flex items-center justify-center gap-2 shadow-md shadow-amber-400/20">
+                <i data-lucide="compass" class="w-4 h-4"></i> Jelajahi Titik Ini
+              </button>
+              <a href="https://www.teleport360.app/share/28056cba-1013-4b6d-b3f3-e78154489f79" target="_blank" class="w-full py-1.5 px-3 rounded-lg bg-teal-900/40 hover:bg-teal-900/80 text-teal-300 hover:text-white text-[11px] font-semibold transition-all flex items-center justify-center gap-1.5 border border-teal-700/40">
+                <i data-lucide="external-link" class="w-3 h-3"></i> Buka di Teleport360.app
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panorama 2 (Teleport 360 - Area Kanan Kolam) -->
+        <div class="bg-teal-950/40 rounded-2xl border-2 border-cyan-400/70 overflow-hidden hover:border-cyan-300 transition-all group flex flex-col shadow-xl shadow-cyan-500/10">
+          <div class="relative h-48 overflow-hidden bg-slate-900">
+            <img src="assets/panoramas/kanan_thumb.jpg" onerror="this.src='https://hdreye-prod.s3.amazonaws.com/file/cd3958d1-5549-41df-b58e-5b3d48cd212c/thumb_23523469-2724-4be0-9e11-01bedaf07b34.jpg'" alt="Area Kanan Kolam Waterpark Lestari 360" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#04171b] via-transparent to-transparent"></div>
+            <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-cyan-500/90 backdrop-blur-sm text-[10px] font-black text-slate-950 flex items-center gap-1 shadow-md">
+              <i data-lucide="sparkles" class="w-3 h-3"></i> REAL 360° LOKASI
+            </span>
+            <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-sm text-[11px] font-bold text-cyan-300 border border-cyan-400/30 flex items-center gap-1">
+              <i data-lucide="eye" class="w-3 h-3"></i> 360°
+            </span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-[10px] uppercase font-bold text-cyan-300 bg-cyan-950/80 px-2 py-0.5 rounded border border-cyan-700/50">Teleport 360 App</span>
+              </div>
+              <h3 class="font-bold text-white text-lg group-hover:text-cyan-300 transition-colors">2. Area Kanan Kolam</h3>
+              <p class="text-xs text-slate-300/80 mt-1 leading-relaxed">Panorama 360° nyata suasana sisi kanan kolam renang dan jalur wahana santai.</p>
+            </div>
+            <div class="mt-4 space-y-2">
+              <button onclick="openVirtualTourModal(1)" class="w-full py-2.5 px-3 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs font-black transition-all flex items-center justify-center gap-2 shadow-md shadow-cyan-400/20">
+                <i data-lucide="compass" class="w-4 h-4"></i> Jelajahi Titik Ini
+              </button>
+              <a href="https://www.teleport360.app/share/3edf1cbd-c0ce-4621-9b14-d2bdc9b22fec" target="_blank" class="w-full py-1.5 px-3 rounded-lg bg-teal-900/40 hover:bg-teal-900/80 text-teal-300 hover:text-white text-[11px] font-semibold transition-all flex items-center justify-center gap-1.5 border border-teal-700/40">
+                <i data-lucide="external-link" class="w-3 h-3"></i> Buka di Teleport360.app
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panorama 3 (Teleport 360 - Area Kiri Kolam) -->
+        <div class="bg-teal-950/40 rounded-2xl border-2 border-emerald-400/70 overflow-hidden hover:border-emerald-300 transition-all group flex flex-col shadow-xl shadow-emerald-500/10">
+          <div class="relative h-48 overflow-hidden bg-slate-900">
+            <img src="assets/panoramas/kiri_thumb.jpg" onerror="this.src='https://hdreye-prod.s3.amazonaws.com/file/b2de7c62-cdf5-44bb-a911-65a7bec55d4f/thumb_170be750-7642-4d07-b72d-770355d208a3.jpg'" alt="Area Kiri Kolam Waterpark Lestari 360" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#04171b] via-transparent to-transparent"></div>
+            <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-emerald-500/90 backdrop-blur-sm text-[10px] font-black text-slate-950 flex items-center gap-1 shadow-md">
+              <i data-lucide="sparkles" class="w-3 h-3"></i> REAL 360° LOKASI
+            </span>
+            <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-sm text-[11px] font-bold text-emerald-300 border border-emerald-400/30 flex items-center gap-1">
+              <i data-lucide="eye" class="w-3 h-3"></i> 360°
+            </span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-[10px] uppercase font-bold text-emerald-300 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-700/50">Teleport 360 App</span>
+              </div>
+              <h3 class="font-bold text-white text-lg group-hover:text-emerald-300 transition-colors">3. Area Kiri Kolam</h3>
+              <p class="text-xs text-slate-300/80 mt-1 leading-relaxed">Panorama 360° nyata suasana sisi kiri kolam renang dan deretan gazebo santai.</p>
+            </div>
+            <div class="mt-4 space-y-2">
+              <button onclick="openVirtualTourModal(2)" class="w-full py-2.5 px-3 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 text-xs font-black transition-all flex items-center justify-center gap-2 shadow-md shadow-emerald-400/20">
+                <i data-lucide="compass" class="w-4 h-4"></i> Jelajahi Titik Ini
+              </button>
+              <a href="https://www.teleport360.app/share/b471f91c-40bc-4a3f-b23d-e96b6b5f0c35" target="_blank" class="w-full py-1.5 px-3 rounded-lg bg-teal-900/40 hover:bg-teal-900/80 text-teal-300 hover:text-white text-[11px] font-semibold transition-all flex items-center justify-center gap-1.5 border border-teal-700/40">
+                <i data-lucide="external-link" class="w-3 h-3"></i> Buka di Teleport360.app
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panorama 4 (Teleport 360 - Area Gazebo dan Kolam Anak) -->
+        <div class="bg-teal-950/40 rounded-2xl border-2 border-rose-400/70 overflow-hidden hover:border-rose-300 transition-all group flex flex-col shadow-xl shadow-rose-500/10">
+          <div class="relative h-48 overflow-hidden bg-slate-900">
+            <img src="assets/panoramas/gazebo_thumb.jpg" onerror="this.src='https://hdreye-prod.s3.amazonaws.com/file/72ef5204-035f-42c1-b87f-b0b3d399759b/thumb_45163b52-ed78-4e22-ae3c-9b08d2f4df5d.jpg'" alt="Area Gazebo dan Kolam Anak 360" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#04171b] via-transparent to-transparent"></div>
+            <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-rose-500/90 backdrop-blur-sm text-[10px] font-black text-white flex items-center gap-1 shadow-md">
+              <i data-lucide="sparkles" class="w-3 h-3"></i> REAL 360° LOKASI
+            </span>
+            <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-sm text-[11px] font-bold text-rose-300 border border-rose-400/30 flex items-center gap-1">
+              <i data-lucide="eye" class="w-3 h-3"></i> 360°
+            </span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-[10px] uppercase font-bold text-rose-300 bg-rose-950/80 px-2 py-0.5 rounded border border-rose-700/50">Teleport 360 App</span>
+              </div>
+              <h3 class="font-bold text-white text-lg group-hover:text-rose-300 transition-colors">4. Area Gazebo dan Kolam Anak</h3>
+              <p class="text-xs text-slate-300/80 mt-1 leading-relaxed">Panorama 360° nyata suasana area gazebo santai keluarga dan kolam anak ramah balita.</p>
+            </div>
+            <div class="mt-4 space-y-2">
+              <button onclick="openVirtualTourModal(3)" class="w-full py-2.5 px-3 rounded-xl bg-rose-400 hover:bg-rose-300 text-slate-950 text-xs font-black transition-all flex items-center justify-center gap-2 shadow-md shadow-rose-400/20">
+                <i data-lucide="compass" class="w-4 h-4"></i> Jelajahi Titik Ini
+              </button>
+              <a href="https://www.teleport360.app/share/f7839617-8a16-4d1b-9bbe-8988597de078" target="_blank" class="w-full py-1.5 px-3 rounded-lg bg-teal-900/40 hover:bg-teal-900/80 text-teal-300 hover:text-white text-[11px] font-semibold transition-all flex items-center justify-center gap-1.5 border border-teal-700/40">
+                <i data-lucide="external-link" class="w-3 h-3"></i> Buka di Teleport360.app
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panorama 5 (Teleport 360 - Area Tengah dan Kolam Anak) -->
+        <div class="bg-teal-950/40 rounded-2xl border-2 border-indigo-400/70 overflow-hidden hover:border-indigo-300 transition-all group flex flex-col shadow-xl shadow-indigo-500/10">
+          <div class="relative h-48 overflow-hidden bg-slate-900">
+            <img src="assets/panoramas/tengah_thumb.jpg" onerror="this.src='https://hdreye-prod.s3.amazonaws.com/file/5fc73c40-2d5c-4e30-ab9b-e7739c2f6927/thumb_17ed9666-7b1e-4a08-9a4d-770370f7fc1c.jpg'" alt="Area Tengah dan Kolam Anak 360" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#04171b] via-transparent to-transparent"></div>
+            <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-indigo-500/90 backdrop-blur-sm text-[10px] font-black text-white flex items-center gap-1 shadow-md">
+              <i data-lucide="sparkles" class="w-3 h-3"></i> REAL 360° LOKASI
+            </span>
+            <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-sm text-[11px] font-bold text-indigo-300 border border-indigo-400/30 flex items-center gap-1">
+              <i data-lucide="eye" class="w-3 h-3"></i> 360°
+            </span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-[10px] uppercase font-bold text-indigo-300 bg-indigo-950/80 px-2 py-0.5 rounded border border-indigo-700/50">Teleport 360 App</span>
+              </div>
+              <h3 class="font-bold text-white text-lg group-hover:text-indigo-300 transition-colors">5. Area Tengah dan Kolam Anak</h3>
+              <p class="text-xs text-slate-300/80 mt-1 leading-relaxed">Panorama 360° nyata suasana area tengah wahana dan pusat kolam bermain anak.</p>
+            </div>
+            <div class="mt-4 space-y-2">
+              <button onclick="openVirtualTourModal(4)" class="w-full py-2.5 px-3 rounded-xl bg-indigo-400 hover:bg-indigo-300 text-slate-950 text-xs font-black transition-all flex items-center justify-center gap-2 shadow-md shadow-indigo-400/20">
+                <i data-lucide="compass" class="w-4 h-4"></i> Jelajahi Titik Ini
+              </button>
+              <a href="https://www.teleport360.app/share/d9600f78-f8d8-448e-9611-d5b03789684c" target="_blank" class="w-full py-1.5 px-3 rounded-lg bg-teal-900/40 hover:bg-teal-900/80 text-teal-300 hover:text-white text-[11px] font-semibold transition-all flex items-center justify-center gap-1.5 border border-teal-700/40">
+                <i data-lucide="external-link" class="w-3 h-3"></i> Buka di Teleport360.app
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panorama 6 (Teleport 360 - Area Parkiran) -->
+        <div class="bg-teal-950/40 rounded-2xl border-2 border-amber-400/70 overflow-hidden hover:border-amber-300 transition-all group flex flex-col shadow-xl shadow-amber-500/10">
+          <div class="relative h-48 overflow-hidden bg-slate-900">
+            <img src="assets/panoramas/parkiran_thumb.jpg" onerror="this.src='https://hdreye-prod.s3.amazonaws.com/file/b790f143-f2d9-489c-935d-a0bc88d94bc6/thumb_7929f3b3-05fd-463e-9131-429c0fe783b6.jpg'" alt="Area Parkiran Waterpark Lestari 360" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#04171b] via-transparent to-transparent"></div>
+            <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-amber-500/90 backdrop-blur-sm text-[10px] font-black text-slate-950 flex items-center gap-1 shadow-md">
+              <i data-lucide="sparkles" class="w-3 h-3"></i> REAL 360° LOKASI
+            </span>
+            <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-sm text-[11px] font-bold text-amber-300 border border-amber-400/30 flex items-center gap-1">
+              <i data-lucide="eye" class="w-3 h-3"></i> 360°
+            </span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-[10px] uppercase font-bold text-amber-300 bg-amber-950/80 px-2 py-0.5 rounded border border-amber-700/50">Teleport 360 App</span>
+              </div>
+              <h3 class="font-bold text-white text-lg group-hover:text-amber-300 transition-colors">6. Area Parkiran</h3>
+              <p class="text-xs text-slate-300/80 mt-1 leading-relaxed">Panorama 360° nyata area parkir luas dan aman untuk kendaraan pengunjung.</p>
+            </div>
+            <div class="mt-4 space-y-2">
+              <button onclick="openVirtualTourModal(5)" class="w-full py-2.5 px-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-black transition-all flex items-center justify-center gap-2 shadow-md shadow-amber-400/20">
+                <i data-lucide="compass" class="w-4 h-4"></i> Jelajahi Titik Ini
+              </button>
+              <a href="https://www.teleport360.app/share/37b4d88c-9c97-45a6-bb33-9916116e04b3" target="_blank" class="w-full py-1.5 px-3 rounded-lg bg-teal-900/40 hover:bg-teal-900/80 text-teal-300 hover:text-white text-[11px] font-semibold transition-all flex items-center justify-center gap-1.5 border border-teal-700/40">
+                <i data-lucide="external-link" class="w-3 h-3"></i> Buka di Teleport360.app
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- In-Page Embedded 360 Interactive Preview -->
+      <div class="mt-14 bg-gradient-to-b from-teal-950/80 to-[#06242a] rounded-3xl border border-teal-700/50 p-4 sm:p-6 shadow-2xl overflow-hidden">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+          <div>
+            <h3 class="text-lg font-bold text-white flex items-center gap-2">
+              <i data-lucide="orbit" class="w-5 h-5 text-amber-400"></i>
+              Viewer Panorama Langsung (Klik & Geser Layar)
+            </h3>
+            <p class="text-xs text-slate-400">Gunakan mouse atau sentuhan jari pada layar HP untuk mengarahkan pandangan 360°.</p>
+          </div>
+          <div class="flex items-center flex-wrap gap-2">
+            <button id="toggleScene0" onclick="switchEmbeddedScene(0)" class="scene-tab-btn active px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-400 text-slate-950 flex items-center gap-1.5 shadow-sm">
+              <span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+              Area Depan (Teleport 360°)
+            </button>
+            <button id="toggleScene1" onclick="switchEmbeddedScene(1)" class="scene-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-teal-900/60 text-slate-300 hover:text-white flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+              Area Kanan Kolam (Teleport 360°)
+            </button>
+            <button id="toggleScene2" onclick="switchEmbeddedScene(2)" class="scene-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-teal-900/60 text-slate-300 hover:text-white flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              Area Kiri Kolam (Teleport 360°)
+            </button>
+            <button id="toggleScene3" onclick="switchEmbeddedScene(3)" class="scene-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-teal-900/60 text-slate-300 hover:text-white flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-rose-400 animate-pulse"></span>
+              Area Gazebo & Kolam Anak (Teleport 360°)
+            </button>
+            <button id="toggleScene4" onclick="switchEmbeddedScene(4)" class="scene-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-teal-900/60 text-slate-300 hover:text-white flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
+              Area Tengah & Kolam Anak (Teleport 360°)
+            </button>
+            <button id="toggleScene5" onclick="switchEmbeddedScene(5)" class="scene-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-teal-900/60 text-slate-300 hover:text-white flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+              Area Parkiran (Teleport 360°)
+            </button>
+          </div>
+        </div>
+
+        <!-- Panorama Container -->
+        <div class="relative w-full h-[400px] sm:h-[480px] rounded-2xl overflow-hidden bg-slate-950 shadow-inner">
+          <div id="embeddedPanorama" class="w-full h-full"></div>
+          
+          <!-- Overlay badge for controls -->
+          <div class="absolute bottom-4 left-4 pointer-events-none bg-slate-950/70 backdrop-blur-md px-3 py-1.5 rounded-xl border border-teal-800/60 text-[11px] text-teal-200 flex items-center gap-2">
+            <i data-lucide="move" class="w-3.5 h-3.5 text-amber-400"></i>
+            <span>Tahan & Geser untuk memutar</span>
+          </div>
+
+          <button onclick="fullscreenEmbedded()" class="absolute bottom-4 right-4 bg-slate-900/80 hover:bg-slate-800 text-white p-2 rounded-xl border border-teal-700/60 text-xs shadow-lg flex items-center gap-1.5">
+            <i data-lucide="maximize" class="w-4 h-4"></i>
+            <span class="hidden sm:inline">Layar Penuh</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= WAHANA & FASILITAS SECTION ================= -->
+  <section id="wahana" class="py-20 bg-[#051d22] relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-900/50 border border-teal-700/60 text-xs font-semibold text-teal-300 uppercase tracking-wider mb-3">
+          <i data-lucide="waves" class="w-3.5 h-3.5"></i>
+          <span>Wahana & Fasilitas Lengkap</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          Keseruan Air untuk Semua Usia
+        </h2>
+        <p class="text-slate-300 text-sm sm:text-base mt-3">
+          Nikmati berbagai wahana ramah anak hingga seluncuran pemicu adrenalin yang aman, terawat, dan diawasi life-guard profesional.
+        </p>
+      </div>
+
+      <!-- Feature Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <!-- Feature 1: Waterboom & Spiral Slide (With Real Photo) -->
+        <div class="bg-teal-950/40 rounded-2xl border-2 border-amber-400/60 overflow-hidden hover:border-amber-400 transition-all hover:-translate-y-1 group flex flex-col shadow-xl shadow-amber-500/10">
+          <div class="relative h-52 overflow-hidden bg-slate-900 cursor-pointer" onclick="openPhotoViewer('assets/wahana/waterboom_slide.jpg')" title="Klik untuk memperbesar foto">
+            <img src="assets/wahana/waterboom_slide.jpg" alt="Waterboom & Spiral Slide Waterpark Lestari" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#04171b] via-transparent to-transparent"></div>
+            <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-amber-500 text-slate-950 text-[10px] font-black flex items-center gap-1 shadow-md">
+              <i data-lucide="sparkles" class="w-3 h-3"></i> FOTO WAHANA ASLI
+            </span>
+            <span class="absolute top-3 right-3 px-2 py-1 rounded-lg bg-black/60 text-white text-[11px] font-medium flex items-center gap-1 backdrop-blur-sm group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">
+              <i data-lucide="zoom-in" class="w-3.5 h-3.5"></i> Perbesar Foto
+            </span>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-[10px] uppercase font-bold text-amber-400 bg-amber-950/80 px-2 py-0.5 rounded border border-amber-700/50">Wahana Favorit</span>
+                <span class="text-[10px] uppercase font-bold text-teal-300 bg-teal-950/80 px-2 py-0.5 rounded border border-teal-700/50">Anak & Dewasa</span>
+              </div>
+              <h3 class="text-xl font-bold text-white mb-2 group-hover:text-amber-400 transition-colors">Waterboom & Spiral Slide</h3>
+              <p class="text-slate-300 text-sm leading-relaxed">
+                Wahana seluncuran spiral kuning-biru dengan menara luncur beratap kanopi pelindung. Meluncur berliku melintasi taman batu asri berpohon palem dan bermuara langsung ke kolam renang utama yang luas, berair jernih, dan segar.
+              </p>
+            </div>
+            <div class="mt-5 pt-4 border-t border-teal-800/60 space-y-2">
+              <div class="flex items-center justify-between text-xs font-semibold">
+                <span class="flex items-center gap-1.5 text-amber-400">
+                  <i data-lucide="check-circle-2" class="w-4 h-4"></i> Pengawasan Lifeguard Aktif
+                </span>
+                <span class="text-teal-300 text-[11px]">Tangga Luncur Kokoh & Aman</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature 2: Ember Tumpah & Kolam Anak (With Real Photo) -->
+        <div class="bg-teal-950/40 rounded-2xl border-2 border-cyan-400/60 overflow-hidden hover:border-cyan-400 transition-all hover:-translate-y-1 group flex flex-col shadow-xl shadow-cyan-500/10">
+          <div class="relative h-52 overflow-hidden bg-slate-900 cursor-pointer" onclick="openPhotoViewer('assets/wahana/ember_tumpah_kolam_anak.jpg')" title="Klik untuk memperbesar foto">
+            <img src="assets/wahana/ember_tumpah_kolam_anak.jpg" alt="Ember Tumpah & Kolam Anak Waterpark Lestari" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#04171b] via-transparent to-transparent"></div>
+            <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-cyan-500 text-slate-950 text-[10px] font-black flex items-center gap-1 shadow-md">
+              <i data-lucide="sparkles" class="w-3 h-3"></i> FOTO WAHANA ASLI
+            </span>
+            <span class="absolute top-3 right-3 px-2 py-1 rounded-lg bg-black/60 text-white text-[11px] font-medium flex items-center gap-1 backdrop-blur-sm group-hover:bg-cyan-500 group-hover:text-slate-950 transition-colors">
+              <i data-lucide="zoom-in" class="w-3.5 h-3.5"></i> Perbesar Foto
+            </span>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-[10px] uppercase font-bold text-cyan-300 bg-cyan-950/80 px-2 py-0.5 rounded border border-cyan-700/50">Wahana Anak & Balita</span>
+                <span class="text-[10px] uppercase font-bold text-amber-400 bg-amber-950/80 px-2 py-0.5 rounded border border-amber-700/50">Sangat Aman</span>
+              </div>
+              <h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors">Ember Tumpah & Kolam Anak</h3>
+              <p class="text-slate-300 text-sm leading-relaxed">
+                Istana bermain air warna-warni dengan ember tumpah merah raksasa di puncak menara, seluncuran spiral merah berputar, perosotan lurus biru, terowongan air, dan tangga kuning berpegangan tangan aman di kolam dangkal berair jernih.
+              </p>
+            </div>
+            <div class="mt-5 pt-4 border-t border-teal-800/60 space-y-2">
+              <div class="flex items-center justify-between text-xs font-semibold">
+                <span class="flex items-center gap-1.5 text-cyan-300">
+                  <i data-lucide="check-circle-2" class="w-4 h-4"></i> Kedalaman Aman 30 - 50 cm
+                </span>
+                <span class="text-amber-400 text-[11px]">Guyuran Ember Tumpah Tiap Menit</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature 3: Gazebo & Bale Santai (With Real Photo) -->
+        <div class="bg-teal-950/40 rounded-2xl border-2 border-orange-400/60 overflow-hidden hover:border-orange-400 transition-all hover:-translate-y-1 group flex flex-col shadow-xl shadow-orange-500/10">
+          <div class="relative h-52 overflow-hidden bg-slate-900 cursor-pointer" onclick="openPhotoViewer('assets/wahana/gazebo_bale_santai.jpg')" title="Klik untuk memperbesar foto">
+            <img src="assets/wahana/gazebo_bale_santai.jpg" alt="Gazebo & Bale Santai Waterpark Lestari" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#04171b] via-transparent to-transparent"></div>
+            <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-orange-500 text-slate-950 text-[10px] font-black flex items-center gap-1 shadow-md">
+              <i data-lucide="sparkles" class="w-3 h-3"></i> FOTO WAHANA ASLI
+            </span>
+            <span class="absolute top-3 right-3 px-2 py-1 rounded-lg bg-black/60 text-white text-[11px] font-medium flex items-center gap-1 backdrop-blur-sm group-hover:bg-orange-500 group-hover:text-slate-950 transition-colors">
+              <i data-lucide="zoom-in" class="w-3.5 h-3.5"></i> Perbesar Foto
+            </span>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-[10px] uppercase font-bold text-orange-400 bg-orange-950/80 px-2 py-0.5 rounded border border-orange-700/50">Area Istirahat & Santai</span>
+                <span class="text-[10px] uppercase font-bold text-teal-300 bg-teal-950/80 px-2 py-0.5 rounded border border-teal-700/50">Keluarga</span>
+              </div>
+              <h3 class="text-xl font-bold text-white mb-2 group-hover:text-orange-400 transition-colors">Gazebo & Bale Santai</h3>
+              <p class="text-slate-300 text-sm leading-relaxed">
+                Deretan pondok gazebo panggung kayu elegan beratap sirap tradisional yang bersih dan kokoh di tepi kolam. Dilengkapi tangga pijakan, lantai lesehan kayu luas, kursi santai, serta naungan atap peneduh yang sejuk di tengah rindangnya pepohonan asri untuk istirahat keluarga.
+              </p>
+            </div>
+            <div class="mt-5 pt-4 border-t border-teal-800/60 space-y-2">
+              <div class="flex items-center justify-between text-xs font-semibold">
+                <span class="flex items-center gap-1.5 text-orange-400">
+                  <i data-lucide="check-circle-2" class="w-4 h-4"></i> Gazebo Panggung Kayu Bersih
+                </span>
+                <span class="text-teal-300 text-[11px]">Teduh Beratap & Berparanet</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature 4: Kantin & Food Court (With Real Photo) -->
+        <div class="bg-teal-950/40 rounded-2xl border-2 border-rose-400/60 overflow-hidden hover:border-rose-400 transition-all hover:-translate-y-1 group flex flex-col shadow-xl shadow-rose-500/10">
+          <div class="relative h-52 overflow-hidden bg-slate-900 cursor-pointer" onclick="openPhotoViewer('assets/wahana/kantin_foodcourt.jpg')" title="Klik untuk memperbesar foto">
+            <img src="assets/wahana/kantin_foodcourt.jpg" alt="Kantin & Food Court Waterpark Lestari" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#04171b] via-transparent to-transparent"></div>
+            <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-rose-500 text-slate-950 text-[10px] font-black flex items-center gap-1 shadow-md">
+              <i data-lucide="sparkles" class="w-3 h-3"></i> FOTO WAHANA ASLI
+            </span>
+            <span class="absolute top-3 right-3 px-2 py-1 rounded-lg bg-black/60 text-white text-[11px] font-medium flex items-center gap-1 backdrop-blur-sm group-hover:bg-rose-500 group-hover:text-slate-950 transition-colors">
+              <i data-lucide="zoom-in" class="w-3.5 h-3.5"></i> Perbesar Foto
+            </span>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-[10px] uppercase font-bold text-rose-400 bg-rose-950/80 px-2 py-0.5 rounded border border-rose-700/50">Kuliner & Minuman Dingin</span>
+                <span class="text-[10px] uppercase font-bold text-amber-400 bg-amber-950/80 px-2 py-0.5 rounded border border-amber-700/50">Lengkap & Higienis</span>
+              </div>
+              <h3 class="text-xl font-bold text-white mb-2 group-hover:text-rose-400 transition-colors">Kantin & Food Court</h3>
+              <p class="text-slate-300 text-sm leading-relaxed">
+                Kantin bersih dan rapi dengan etalase kaca berisi aneka mie instan cup hangat dan camilan snack, freezer es krim Joyday beraneka rasa, serta kulkas showcase Coca-Cola dingin berisi aneka minuman segar dan air mineral untuk melepas dahaga seusai berenang.
+              </p>
+            </div>
+            <div class="mt-5 pt-4 border-t border-teal-800/60 space-y-2">
+              <div class="flex items-center justify-between text-xs font-semibold">
+                <span class="flex items-center gap-1.5 text-rose-400">
+                  <i data-lucide="check-circle-2" class="w-4 h-4"></i> Etalase Snack & Mie Cup
+                </span>
+                <span class="text-amber-400 text-[11px]">Es Krim Joyday & Minuman Dingin</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature 5: Fasilitas Penunjang Lengkap (With Real Photo) -->
+        <div class="bg-teal-950/40 rounded-2xl border-2 border-purple-400/60 overflow-hidden hover:border-purple-400 transition-all hover:-translate-y-1 group flex flex-col shadow-xl shadow-purple-500/10">
+          <div class="relative h-52 overflow-hidden bg-slate-900 cursor-pointer" onclick="openPhotoViewer('assets/wahana/fasilitas_penunjang.jpg')" title="Klik untuk memperbesar foto">
+            <img src="assets/wahana/fasilitas_penunjang.jpg" alt="Fasilitas Penunjang & Area Parkir Beratap Waterpark Lestari" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#04171b] via-transparent to-transparent"></div>
+            <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-purple-500 text-white text-[10px] font-black flex items-center gap-1 shadow-md">
+              <i data-lucide="sparkles" class="w-3 h-3"></i> FOTO FASILITAS ASLI
+            </span>
+            <span class="absolute top-3 right-3 px-2 py-1 rounded-lg bg-black/60 text-white text-[11px] font-medium flex items-center gap-1 backdrop-blur-sm group-hover:bg-purple-500 group-hover:text-white transition-colors">
+              <i data-lucide="zoom-in" class="w-3.5 h-3.5"></i> Perbesar Foto
+            </span>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-[10px] uppercase font-bold text-purple-300 bg-purple-950/80 px-2 py-0.5 rounded border border-purple-700/50">Parkir Beratap & Keamanan</span>
+                <span class="text-[10px] uppercase font-bold text-teal-300 bg-teal-950/80 px-2 py-0.5 rounded border border-teal-700/50">Kenyamanan Pengunjung</span>
+              </div>
+              <h3 class="text-xl font-bold text-white mb-2 group-hover:text-purple-300 transition-colors">Fasilitas Penunjang Lengkap</h3>
+              <p class="text-slate-300 text-sm leading-relaxed">
+                Area parkir luas berlantai semen dan beratap gedung beton kokoh yang teduh, melindungi sepeda motor dan kendaraan pengunjung dari terik matahari maupun hujan. Dilengkapi toilet bersih terpisah, ruang bilas, loker barang, serta musholla nyaman.
+              </p>
+            </div>
+            <div class="mt-5 pt-4 border-t border-teal-800/60 space-y-2">
+              <div class="flex items-center justify-between text-xs font-semibold">
+                <span class="flex items-center gap-1.5 text-purple-300">
+                  <i data-lucide="check-circle-2" class="w-4 h-4"></i> Parkir Motor & Mobil Beratap
+                </span>
+                <span class="text-amber-400 text-[11px]">Toilet, Bilas & Musholla Bersih</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= TIKET & JAM OPERASIONAL ================= -->
+  <section id="tiket" class="py-20 bg-[#04171b] border-t border-teal-900/50 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-900/50 border border-teal-700/60 text-xs font-semibold text-teal-300 uppercase tracking-wider mb-3">
+          <i data-lucide="ticket" class="w-3.5 h-3.5"></i>
+          <span>Informasi Tiket & Jadwal</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          Harga Tiket Masuk & Jam Operasional
+        </h2>
+        <p class="text-slate-300 text-sm sm:text-base mt-3">
+          Harga terjangkau untuk rekreasi keluarga yang menyenangkan di Tomoni, Luwu Timur.
+        </p>
+      </div>
+
+      <!-- Pricing Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        
+        <!-- Weekday Ticket -->
+        <div class="bg-teal-950/50 rounded-3xl border border-teal-800/60 p-7 flex flex-col justify-between hover:border-teal-500/60 transition-all">
+          <div>
+            <div class="flex justify-between items-center mb-4">
+              <span class="text-xs font-extrabold tracking-wider uppercase text-teal-400 bg-teal-900/60 px-3 py-1 rounded-full">Senin - Jumat</span>
+              <i data-lucide="calendar" class="w-5 h-5 text-teal-400"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white">Hari Kerja (Weekday)</h3>
+            <p class="text-xs text-slate-300 mt-1">Suasana lebih tenang, cocok untuk berenang santai</p>
+            
+            <div class="my-6 space-y-3">
+              <div class="flex items-baseline justify-between border-b border-teal-900/60 pb-2">
+                <span class="text-sm text-slate-300">Anak-Anak</span>
+                <span class="text-xl font-black text-amber-400">Rp25.000</span>
+              </div>
+              <div class="flex items-baseline justify-between border-b border-teal-900/60 pb-2">
+                <span class="text-sm text-slate-300">Dewasa</span>
+                <span class="text-xl font-black text-white">Rp30.000</span>
+              </div>
+            </div>
+
+            <ul class="space-y-2.5 text-xs text-slate-300">
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Akses semua kolam & waterboom</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Gratis akses gazebo umum</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Kamar bilas & toilet</li>
+            </ul>
+          </div>
+
+          <a href="#kontak" class="mt-8 block text-center py-3 px-4 rounded-xl bg-teal-900/80 hover:bg-teal-800 text-white text-xs font-bold transition-all border border-teal-700/50">
+            Tanya Info Tiket
+          </a>
+        </div>
+
+        <!-- Weekend Ticket (Featured) -->
+        <div class="bg-gradient-to-b from-[#0e434e] to-[#072a31] rounded-3xl border-2 border-amber-400/80 p-7 flex flex-col justify-between shadow-2xl shadow-amber-500/10 relative transform md:-translate-y-2">
+          <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-amber-400 text-slate-950 text-[10px] font-black uppercase tracking-wider px-3.5 py-1 rounded-full shadow-md">
+            Paling Populer
+          </div>
+
+          <div>
+            <div class="flex justify-between items-center mb-4 mt-1">
+              <span class="text-xs font-extrabold tracking-wider uppercase text-amber-300 bg-amber-500/20 px-3 py-1 rounded-full">Sabtu, Minggu & Libur</span>
+              <i data-lucide="sun" class="w-5 h-5 text-amber-400"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white">Akhir Pekan (Weekend)</h3>
+            <p class="text-xs text-slate-300 mt-1">Acara seru keluarga & wahana beroperasi penuh</p>
+            
+            <div class="my-6 space-y-3">
+              <div class="flex items-baseline justify-between border-b border-teal-700/60 pb-2">
+                <span class="text-sm text-slate-200">Anak-Anak</span>
+                <span class="text-2xl font-black text-amber-400">Rp30.000</span>
+              </div>
+              <div class="flex items-baseline justify-between border-b border-teal-700/60 pb-2">
+                <span class="text-sm text-slate-200">Dewasa</span>
+                <span class="text-2xl font-black text-white">Rp35.000</span>
+              </div>
+            </div>
+
+            <ul class="space-y-2.5 text-xs text-slate-200">
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-amber-400"></i> Akses semua wahana beroperasi</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-amber-400"></i> Live music / hiburan santai</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-amber-400"></i> Pengawasan lifecare maksimal</li>
+            </ul>
+          </div>
+
+          <a href="https://wa.me/6281347678886?text=Halo%20Waterpark%20Lestari%2C%20saya%20ingin%20tanya%20tiket%20masuk" target="_blank" class="mt-8 block text-center py-3.5 px-4 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-black transition-all shadow-lg shadow-amber-400/25">
+            Pesan Via WhatsApp
+          </a>
+        </div>
+
+        <!-- Rombongan / Paket Khusus -->
+        <div class="bg-teal-950/50 rounded-3xl border border-teal-800/60 p-7 flex flex-col justify-between hover:border-teal-500/60 transition-all">
+          <div>
+            <div class="flex justify-between items-center mb-4">
+              <span class="text-xs font-extrabold tracking-wider uppercase text-cyan-400 bg-cyan-900/60 px-3 py-1 rounded-full">Rombongan & Sekolah</span>
+              <i data-lucide="users" class="w-5 h-5 text-cyan-400"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white">Paket Grup / Event</h3>
+            <p class="text-xs text-slate-300 mt-1">Khusus rombongan sekolah, instansi & perayaan</p>
+            
+            <div class="my-6 space-y-3">
+              <div class="flex items-baseline justify-between border-b border-teal-900/60 pb-2">
+                <span class="text-sm text-slate-300">Min. 25 Orang</span>
+                <span class="text-xl font-black text-amber-400">Diskon Khusus</span>
+              </div>
+              <div class="flex items-baseline justify-between border-b border-teal-900/60 pb-2">
+                <span class="text-sm text-slate-300">Sewa Gazebo VIP</span>
+                <span class="text-xl font-black text-white">Tersedia</span>
+              </div>
+            </div>
+
+            <ul class="space-y-2.5 text-xs text-slate-300">
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Reservasi tempat khusus</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Fasilitas sound & sambutan</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Paket snack & makan siang (opsional)</li>
+            </ul>
+          </div>
+
+          <a href="#kontak" class="mt-8 block text-center py-3 px-4 rounded-xl bg-teal-900/80 hover:bg-teal-800 text-white text-xs font-bold transition-all border border-teal-700/50">
+            Hubungi Pengelola
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Jam Operasional Info Bar -->
+      <div class="mt-12 max-w-4xl mx-auto rounded-2xl bg-teal-950/60 border border-teal-800/80 p-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-amber-400/20 text-amber-400 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="clock" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h4 class="text-white font-bold text-base">Jam Operasional Setiap Hari</h4>
+            <p class="text-xs text-slate-300">Senin - Minggu: <strong class="text-amber-400">08.00 - 18.00 WITA</strong></p>
+          </div>
+        </div>
+        <div class="text-xs text-slate-400 sm:text-right">
+          <span class="inline-block bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full font-semibold mb-1">
+            • Buka Hari Libur Nasional
+          </span>
+          <p>Loket tutup 1 jam sebelum wahana selesai.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= LOKASI & RUTE ================= -->
+  <section id="lokasi" class="py-20 bg-[#051d22] relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Left: Location Details -->
+        <div class="lg:col-span-5">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-900/50 border border-teal-700/60 text-xs font-semibold text-teal-300 uppercase tracking-wider mb-3">
+            <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+            <span>Akses & Alamat</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+            Lokasi Strategis di Tomoni
+          </h2>
+          <p class="text-slate-300 text-sm mt-3 leading-relaxed">
+            Waterpark Lestari berlokasi di kawasan asri Kecamatan Tomoni, Kabupaten Luwu Timur, Sulawesi Selatan. Akses jalan beraspal mulus, mudah dicapai kendaraan pribadi maupun bus pariwisata.
+          </p>
+
+          <div class="mt-8 space-y-4">
+            <div class="flex items-start gap-3.5">
+              <div class="w-9 h-9 rounded-lg bg-teal-900/80 text-amber-400 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <i data-lucide="map-pin" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-white">Alamat Lengkap</h4>
+                <p class="text-xs text-slate-300 mt-0.5">Jl. Trans Sulawesi, Tomoni, Luwu Timur, Sulawesi Selatan, Indonesia 92972</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3.5">
+              <div class="w-9 h-9 rounded-lg bg-teal-900/80 text-cyan-400 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <i data-lucide="car" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-white">Area Parkir Luas</h4>
+                <p class="text-xs text-slate-300 mt-0.5">Tersedia lahan parkir aman untuk ratusan motor, puluhan mobil, dan bus pariwisata.</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3.5">
+              <div class="w-9 h-9 rounded-lg bg-teal-900/80 text-emerald-400 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <i data-lucide="compass" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-white">Petunjuk Arah</h4>
+                <p class="text-xs text-slate-300 mt-0.5">Hanya 5-10 menit dari pusat Pasar Sentral Tomoni atau Poros Trans Sulawesi.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8">
+            <a href="https://www.google.com/maps/place/-2.522109,120.814861" target="_blank" class="inline-flex items-center gap-2 bg-[#f5a623] hover:bg-[#ffbe42] text-slate-950 font-bold text-xs sm:text-sm px-6 py-3 rounded-full shadow-lg shadow-amber-500/20 transition-all">
+              <i data-lucide="navigation" class="w-4 h-4"></i>
+              <span>Buka Koordinat GPS di Google Maps</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Map Box -->
+        <div class="lg:col-span-7">
+          <div class="rounded-3xl overflow-hidden border border-teal-800/80 shadow-2xl bg-teal-950/40 relative">
+            <iframe 
+              src="https://maps.google.com/maps?q=-2.522109,120.814861&hl=id&z=15&output=embed" 
+              class="w-full h-[380px] sm:h-[440px] border-0" 
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Peta Lokasi Tomoni Luwu Timur">
+            </iframe>
+            
+            <div class="absolute top-4 left-4 bg-slate-900/90 backdrop-blur-md px-3.5 py-2 rounded-xl border border-teal-700/60 text-xs">
+              <span class="font-bold text-white flex items-center gap-1.5">
+                <i data-lucide="map-pin" class="w-4 h-4 text-amber-400"></i> Waterpark Lestari Tomoni (-2.522109, 120.814861)
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= GALERI FOTO ================= -->
+  <section id="galeri" class="py-20 bg-[#04171b] border-t border-teal-900/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-900/50 border border-teal-700/60 text-xs font-semibold text-teal-300 uppercase tracking-wider mb-3">
+          <i data-lucide="image" class="w-3.5 h-3.5"></i>
+          <span>Dokumentasi Pengunjung</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          Galeri Keceriaan di Waterpark Lestari
+        </h2>
+        <p class="text-slate-300 text-sm sm:text-base mt-3">
+          Momen tawa, kesegaran air, dan kebersamaan keluarga yang abadi.
+        </p>
+      </div>
+
+      <!-- Gallery Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Foto 1 -->
+        <div class="rounded-2xl overflow-hidden h-64 sm:h-72 relative group cursor-pointer border border-teal-700/60 hover:border-amber-400 transition-all duration-300 shadow-lg shadow-teal-950/40" onclick="openPhotoViewer('assets/galeri/galeri_1_kolam_anak_ceria.jpg')" title="Keseruan Kolam Anak & Panggung Hiburan">
+          <img src="assets/galeri/galeri_1_kolam_anak_ceria.jpg" alt="Keseruan Kolam Anak & Panggung Hiburan" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-4">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-1 rounded-full bg-amber-500/90 text-slate-950 text-[10px] font-black tracking-wide shadow-md flex items-center gap-1">
+                <i data-lucide="sparkles" class="w-3 h-3"></i> FOTO ASLI
+              </span>
+              <span class="p-1.5 rounded-lg bg-black/60 text-white group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">
+                <i data-lucide="zoom-in" class="w-4 h-4"></i>
+              </span>
+            </div>
+            <div>
+              <h4 class="text-white font-bold text-sm sm:text-base drop-shadow-md">Keseruan Kolam Anak & Panggung</h4>
+              <p class="text-slate-300 text-xs mt-0.5 line-clamp-1">Area kolam dangkal ceria dan panggung hiburan terbuka</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Foto 2 -->
+        <div class="rounded-2xl overflow-hidden h-64 sm:h-72 relative group cursor-pointer border border-teal-700/60 hover:border-amber-400 transition-all duration-300 shadow-lg shadow-teal-950/40" onclick="openPhotoViewer('assets/galeri/galeri_2_kolam_utama_luas.jpg')" title="Kolam Renang Utama & Gedung Biru">
+          <img src="assets/galeri/galeri_2_kolam_utama_luas.jpg" alt="Kolam Renang Utama & Gedung Biru" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-4">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-1 rounded-full bg-cyan-500/90 text-slate-950 text-[10px] font-black tracking-wide shadow-md flex items-center gap-1">
+                <i data-lucide="sparkles" class="w-3 h-3"></i> FOTO ASLI
+              </span>
+              <span class="p-1.5 rounded-lg bg-black/60 text-white group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">
+                <i data-lucide="zoom-in" class="w-4 h-4"></i>
+              </span>
+            </div>
+            <div>
+              <h4 class="text-white font-bold text-sm sm:text-base drop-shadow-md">Kolam Renang Utama & Gedung Biru</h4>
+              <p class="text-slate-300 text-xs mt-0.5 line-clamp-1">Kolam renang luas dengan air jernih dan gazebo santai</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Foto 3 -->
+        <div class="rounded-2xl overflow-hidden h-64 sm:h-72 relative group cursor-pointer border border-teal-700/60 hover:border-amber-400 transition-all duration-300 shadow-lg shadow-teal-950/40" onclick="openPhotoViewer('assets/galeri/galeri_3_patung_lumba_lumba.jpg')" title="Pancuran Air Patung Lumba-Lumba">
+          <img src="assets/galeri/galeri_3_patung_lumba_lumba.jpg" alt="Pancuran Air Patung Lumba-Lumba" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-4">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-1 rounded-full bg-amber-500/90 text-slate-950 text-[10px] font-black tracking-wide shadow-md flex items-center gap-1">
+                <i data-lucide="sparkles" class="w-3 h-3"></i> FOTO ASLI
+              </span>
+              <span class="p-1.5 rounded-lg bg-black/60 text-white group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">
+                <i data-lucide="zoom-in" class="w-4 h-4"></i>
+              </span>
+            </div>
+            <div>
+              <h4 class="text-white font-bold text-sm sm:text-base drop-shadow-md">Pancuran Patung Lumba-Lumba</h4>
+              <p class="text-slate-300 text-xs mt-0.5 line-clamp-1">Spot foto ikonik patung lumba-lumba biru di tepian kolam</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Foto 4 -->
+        <div class="rounded-2xl overflow-hidden h-64 sm:h-72 relative group cursor-pointer border border-teal-700/60 hover:border-amber-400 transition-all duration-300 shadow-lg shadow-teal-950/40" onclick="openPhotoViewer('assets/galeri/galeri_4_jembatan_pelangi_air.jpg')" title="Jembatan Lengkung & Kolam Wahana">
+          <img src="assets/galeri/galeri_4_jembatan_pelangi_air.jpg" alt="Jembatan Lengkung & Kolam Wahana" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-4">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-1 rounded-full bg-cyan-500/90 text-slate-950 text-[10px] font-black tracking-wide shadow-md flex items-center gap-1">
+                <i data-lucide="sparkles" class="w-3 h-3"></i> FOTO ASLI
+              </span>
+              <span class="p-1.5 rounded-lg bg-black/60 text-white group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">
+                <i data-lucide="zoom-in" class="w-4 h-4"></i>
+              </span>
+            </div>
+            <div>
+              <h4 class="text-white font-bold text-sm sm:text-base drop-shadow-md">Jembatan Lengkung Kolam Anak</h4>
+              <p class="text-slate-300 text-xs mt-0.5 line-clamp-1">Pancuran lengkung warna-warni beratap paranet sejuk</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Foto 5 -->
+        <div class="rounded-2xl overflow-hidden h-64 sm:h-72 relative group cursor-pointer border border-teal-700/60 hover:border-amber-400 transition-all duration-300 shadow-lg shadow-teal-950/40" onclick="openPhotoViewer('assets/galeri/galeri_5_payung_teduh_kolam.jpg')" title="Kolam Santai Payung Teduh & Ember Tumpah">
+          <img src="assets/galeri/galeri_5_payung_teduh_kolam.jpg" alt="Kolam Santai Payung Teduh & Ember Tumpah" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-4">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-1 rounded-full bg-amber-500/90 text-slate-950 text-[10px] font-black tracking-wide shadow-md flex items-center gap-1">
+                <i data-lucide="sparkles" class="w-3 h-3"></i> FOTO ASLI
+              </span>
+              <span class="p-1.5 rounded-lg bg-black/60 text-white group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">
+                <i data-lucide="zoom-in" class="w-4 h-4"></i>
+              </span>
+            </div>
+            <div>
+              <h4 class="text-white font-bold text-sm sm:text-base drop-shadow-md">Payung Teduh & Wahana Ember Tumpah</h4>
+              <p class="text-slate-300 text-xs mt-0.5 line-clamp-1">Bersantai di tepi kolam dengan latar istana air ember tumpah</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Foto 6 -->
+        <div class="rounded-2xl overflow-hidden h-64 sm:h-72 relative group cursor-pointer border border-teal-700/60 hover:border-amber-400 transition-all duration-300 shadow-lg shadow-teal-950/40" onclick="openPhotoViewer('assets/galeri/galeri_6_kolam_terapi_santai.jpg')" title="Kolam Terapi Ikan & Area Santai">
+          <img src="assets/galeri/galeri_6_kolam_terapi_santai.jpg" alt="Kolam Terapi Ikan & Area Santai" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-4">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-1 rounded-full bg-cyan-500/90 text-slate-950 text-[10px] font-black tracking-wide shadow-md flex items-center gap-1">
+                <i data-lucide="sparkles" class="w-3 h-3"></i> FOTO ASLI
+              </span>
+              <span class="p-1.5 rounded-lg bg-black/60 text-white group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">
+                <i data-lucide="zoom-in" class="w-4 h-4"></i>
+              </span>
+            </div>
+            <div>
+              <h4 class="text-white font-bold text-sm sm:text-base drop-shadow-md">Kolam Terapi Ikan & Santai Teduh</h4>
+              <p class="text-slate-300 text-xs mt-0.5 line-clamp-1">Area relaksasi kolam terapi dan lesehan santai keluarga</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Foto 7 -->
+        <div class="rounded-2xl overflow-hidden h-64 sm:h-72 relative group cursor-pointer border border-teal-700/60 hover:border-amber-400 transition-all duration-300 shadow-lg shadow-teal-950/40" onclick="openPhotoViewer('assets/galeri/galeri_7_meja_santai_kuliner.jpg')" title="Area Santai Meja Cafe di Tepi Kolam">
+          <img src="assets/galeri/galeri_7_meja_santai_kuliner.jpg" alt="Area Santai Meja Cafe di Tepi Kolam" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-4">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-1 rounded-full bg-amber-500/90 text-slate-950 text-[10px] font-black tracking-wide shadow-md flex items-center gap-1">
+                <i data-lucide="sparkles" class="w-3 h-3"></i> FOTO ASLI
+              </span>
+              <span class="p-1.5 rounded-lg bg-black/60 text-white group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">
+                <i data-lucide="zoom-in" class="w-4 h-4"></i>
+              </span>
+            </div>
+            <div>
+              <h4 class="text-white font-bold text-sm sm:text-base drop-shadow-md">Meja & Kursi Santai Kuliner</h4>
+              <p class="text-slate-300 text-xs mt-0.5 line-clamp-1">Tempat duduk nyaman beratap untuk menyantap hidangan kantin</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Foto 8 -->
+        <div class="rounded-2xl overflow-hidden h-64 sm:h-72 relative group cursor-pointer border border-teal-700/60 hover:border-amber-400 transition-all duration-300 shadow-lg shadow-teal-950/40" onclick="openPhotoViewer('assets/galeri/galeri_8_jembatan_kayu_jamur.jpg')" title="Jembatan Kayu & Jamur Air Merah">
+          <img src="assets/galeri/galeri_8_jembatan_kayu_jamur.jpg" alt="Jembatan Kayu & Jamur Air Merah" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-4">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-1 rounded-full bg-cyan-500/90 text-slate-950 text-[10px] font-black tracking-wide shadow-md flex items-center gap-1">
+                <i data-lucide="sparkles" class="w-3 h-3"></i> FOTO ASLI
+              </span>
+              <span class="p-1.5 rounded-lg bg-black/60 text-white group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">
+                <i data-lucide="zoom-in" class="w-4 h-4"></i>
+              </span>
+            </div>
+            <div>
+              <h4 class="text-white font-bold text-sm sm:text-base drop-shadow-md">Jembatan Kayu & Jamur Air</h4>
+              <p class="text-slate-300 text-xs mt-0.5 line-clamp-1">Jembatan estetis melintasi kolam dengan ornamen jamur ceria</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Foto 9 -->
+        <div class="rounded-2xl overflow-hidden h-64 sm:h-72 relative group cursor-pointer border border-teal-700/60 hover:border-amber-400 transition-all duration-300 shadow-lg shadow-teal-950/40" onclick="openPhotoViewer('assets/galeri/galeri_9_panorama_kolam_panjang.jpg')" title="Area Kolam Renang Panjang Beratap">
+          <img src="assets/galeri/galeri_9_panorama_kolam_panjang.jpg" alt="Area Kolam Renang Panjang Beratap" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-4">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-1 rounded-full bg-amber-500/90 text-slate-950 text-[10px] font-black tracking-wide shadow-md flex items-center gap-1">
+                <i data-lucide="sparkles" class="w-3 h-3"></i> FOTO ASLI
+              </span>
+              <span class="p-1.5 rounded-lg bg-black/60 text-white group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">
+                <i data-lucide="zoom-in" class="w-4 h-4"></i>
+              </span>
+            </div>
+            <div>
+              <h4 class="text-white font-bold text-sm sm:text-base drop-shadow-md">Kolam Renang Panjang Beratap</h4>
+              <p class="text-slate-300 text-xs mt-0.5 line-clamp-1">Kolam renang luas dinaungi atap teduh untuk kenyamanan berenang</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= TESTIMONI & FAQ ================= -->
+  <section class="py-20 bg-[#051d22] relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        
+        <!-- Left: Testimonials -->
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-900/50 border border-teal-700/60 text-xs font-semibold text-teal-300 uppercase tracking-wider mb-3">
+            <i data-lucide="star" class="w-3.5 h-3.5 text-amber-400"></i>
+            <span>Ulasan Pengunjung</span>
+          </div>
+          <h2 class="text-3xl font-extrabold text-white tracking-tight mb-8">
+            Apa Kata Mereka Tentang Waterpark Lestari?
+          </h2>
+
+          <div class="space-y-4">
+            <!-- Testimonial 1 -->
+            <div class="bg-teal-950/40 rounded-2xl border border-teal-800/60 p-5">
+              <div class="flex items-center gap-1 text-amber-400 mb-2">
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+              </div>
+              <p class="text-xs sm:text-sm text-slate-300 italic">
+                "Senang sekali ada virtual tour 360-nya, jadi sebelum ajak anak-anak kami sudah tahu fasilitas gazebo dan kolam anak seperti apa. Begitu sampai, aslinya memang bersih dan sejuk!"
+              </p>
+              <div class="mt-3 text-xs font-bold text-white">— Rahmawati S., Pengunjung dari Malili</div>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="bg-teal-950/40 rounded-2xl border border-teal-800/60 p-5">
+              <div class="flex items-center gap-1 text-amber-400 mb-2">
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+              </div>
+              <p class="text-xs sm:text-sm text-slate-300 italic">
+                "Harga tiket 25-30 ribu sangat ramah di kantong dengan fasilitas seluncuran yang seru. Suasananya sejuk dan asri untuk liburan keluarga."
+              </p>
+              <div class="mt-3 text-xs font-bold text-white">— Hendra Wijaya, Pengunjung Lokal Tomoni</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: FAQ -->
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-900/50 border border-teal-700/60 text-xs font-semibold text-teal-300 uppercase tracking-wider mb-3">
+            <i data-lucide="help-circle" class="w-3.5 h-3.5"></i>
+            <span>Pertanyaan Umum (FAQ)</span>
+          </div>
+          <h2 class="text-3xl font-extrabold text-white tracking-tight mb-8">
+            Hal yang Sering Ditanyakan
+          </h2>
+
+          <div class="space-y-3">
+            <details class="group bg-teal-950/40 rounded-xl border border-teal-800/60 p-4 [&_summary::-webkit-details-marker]:hidden">
+              <summary class="flex items-center justify-between cursor-pointer font-semibold text-sm text-white">
+                <span>Apakah boleh membawa makanan dari luar?</span>
+                <span class="transition group-open:rotate-180">
+                  <i data-lucide="chevron-down" class="w-4 h-4 text-amber-400"></i>
+                </span>
+              </summary>
+              <p class="text-xs text-slate-300 mt-3 leading-relaxed">
+                Pengunjung diperkenankan membawa makanan ringan atau bekal keluarga secukupnya. Namun kami juga menyediakan food court dengan beragam kuliner lezat dan higienis.
+              </p>
+            </details>
+
+            <details class="group bg-teal-950/40 rounded-xl border border-teal-800/60 p-4 [&_summary::-webkit-details-marker]:hidden">
+              <summary class="flex items-center justify-between cursor-pointer font-semibold text-sm text-white">
+                <span>Apakah anak di bawah usia 2 tahun dikenakan tiket?</span>
+                <span class="transition group-open:rotate-180">
+                  <i data-lucide="chevron-down" class="w-4 h-4 text-amber-400"></i>
+                </span>
+              </summary>
+              <p class="text-xs text-slate-300 mt-3 leading-relaxed">
+                Untuk balita dengan tinggi badan di bawah 80 cm atau usia di bawah 2 tahun tidak dikenakan biaya tiket masuk (Gratis).
+              </p>
+            </details>
+
+            <details class="group bg-teal-950/40 rounded-xl border border-teal-800/60 p-4 [&_summary::-webkit-details-marker]:hidden">
+              <summary class="flex items-center justify-between cursor-pointer font-semibold text-sm text-white">
+                <span>Bagaimana cara menggunakan fitur Virtual Tour 360°?</span>
+                <span class="transition group-open:rotate-180">
+                  <i data-lucide="chevron-down" class="w-4 h-4 text-amber-400"></i>
+                </span>
+              </summary>
+              <p class="text-xs text-slate-300 mt-3 leading-relaxed">
+                Cukup klik tombol "Mulai Virtual Tour" di bagian atas halaman atau pilih salah satu dari 4 titik panorama. Geser mouse atau layar ponsel Anda untuk melihat sudut 360 derajat.
+              </p>
+            </details>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= FOOTER / KONTAK ================= -->
+  <footer id="kontak" class="bg-[#031114] border-t border-teal-900/60 pt-16 pb-12 text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-teal-900/40">
+        
+        <!-- Col 1: Brand Info -->
+        <div class="lg:col-span-5">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-500 to-amber-300 flex items-center justify-center shadow-lg shadow-amber-500/20">
+              <svg class="w-6 h-6 text-slate-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 12c2.5-3 5.5-3 8 0s5.5 3 8 0 5.5-3 8 0"></path>
+                <path d="M2 17c2.5-3 5.5-3 8 0s5.5 3 8 0 5.5-3 8 0"></path>
+              </svg>
+            </div>
+            <div>
+              <span class="font-extrabold text-white text-lg tracking-tight block">Waterpark Lestari</span>
+              <span class="text-[10px] tracking-widest uppercase font-semibold text-teal-400">VIRTUAL TOUR • TOMONI</span>
+            </div>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-sm mb-6">
+            Destinasi wisata air keluarga terfavorit di Kecamatan Tomoni, Luwu Timur. Menghadirkan keceriaan liburan dengan wahana modern dan asri.
+          </p>
+          <div class="flex items-center gap-3">
+            <a href="https://instagram.com/semoga_lestari" target="_blank" title="Instagram @semoga_lestari" class="w-9 h-9 rounded-full bg-teal-950 border border-teal-800 text-teal-300 hover:text-pink-400 hover:border-pink-400 flex items-center justify-center transition-colors">
+              <i data-lucide="instagram" class="w-4 h-4"></i>
+            </a>
+            <a href="mailto:management@semogalestari.com" title="Email management@semogalestari.com" class="w-9 h-9 rounded-full bg-teal-950 border border-teal-800 text-teal-300 hover:text-cyan-400 hover:border-cyan-400 flex items-center justify-center transition-colors">
+              <i data-lucide="mail" class="w-4 h-4"></i>
+            </a>
+            <a href="https://wa.me/6281347678886?text=Halo%20Waterpark%20Lestari%20Tomoni%2C%20saya%20ingin%20tanya%20informasi" target="_blank" title="WhatsApp +62 813-4767-8886" class="w-9 h-9 rounded-full bg-teal-950 border border-teal-800 text-teal-300 hover:text-emerald-400 hover:border-emerald-400 flex items-center justify-center transition-colors">
+              <i data-lucide="message-circle" class="w-4 h-4"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Col 2: Nav Links -->
+        <div class="lg:col-span-3">
+          <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Navigasi</h4>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="#beranda" class="hover:text-amber-400 transition-colors">Beranda</a></li>
+            <li><a href="#virtual-tour" class="hover:text-amber-400 transition-colors">Tur Virtual 360°</a></li>
+            <li><a href="#wahana" class="hover:text-amber-400 transition-colors">Wahana & Fasilitas</a></li>
+            <li><a href="#tiket" class="hover:text-amber-400 transition-colors">Tiket & Jam Buka</a></li>
+            <li><a href="#lokasi" class="hover:text-amber-400 transition-colors">Lokasi & Rute</a></li>
+            <li><a href="#galeri" class="hover:text-amber-400 transition-colors">Galeri Foto</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Contact & Info -->
+        <div class="lg:col-span-4">
+          <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+            <span>Kontak Kami</span>
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          </h4>
+          <ul class="space-y-3.5 text-xs">
+            <li class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg bg-pink-500/10 text-pink-400 flex items-center justify-center flex-shrink-0 border border-pink-500/20">
+                <i data-lucide="instagram" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <span class="block text-[10px] uppercase font-bold text-slate-400">Instagram</span>
+                <a href="https://instagram.com/semoga_lestari" target="_blank" class="font-semibold text-white hover:text-pink-400 transition-colors">
+                  @semoga_lestari
+                </a>
+              </div>
+            </li>
+            <li class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center flex-shrink-0 border border-cyan-500/20">
+                <i data-lucide="mail" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <span class="block text-[10px] uppercase font-bold text-slate-400">Email</span>
+                <a href="mailto:management@semogalestari.com" class="font-semibold text-white hover:text-cyan-400 transition-colors">
+                  management@semogalestari.com
+                </a>
+              </div>
+            </li>
+            <li class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center flex-shrink-0 border border-emerald-500/20">
+                <i data-lucide="message-circle" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <span class="block text-[10px] uppercase font-bold text-slate-400">WhatsApp & Telepon</span>
+                <a href="https://wa.me/6281347678886?text=Halo%20Waterpark%20Lestari%20Tomoni%2C%20saya%20ingin%20tanya%20informasi" target="_blank" class="font-bold text-amber-400 hover:text-amber-300 transition-colors flex items-center gap-1.5">
+                  <span>+62 813-4767-8886</span>
+                  <span class="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-bold">Chat WA</span>
+                </a>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-lg bg-teal-500/10 text-teal-400 flex items-center justify-center flex-shrink-0 border border-teal-500/20 mt-0.5">
+                <i data-lucide="map-pin" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <span class="block text-[10px] uppercase font-bold text-slate-400">Alamat</span>
+                <p class="text-slate-300 leading-relaxed font-medium">
+                  Jl. Trans Sulawesi, Tomoni, Luwu Timur, Sulawesi Selatan, Indonesia
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Copyright -->
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        <p>© 2026 Waterpark Lestari - Tomoni. Hak Cipta Dilindungi.</p>
+        <p class="text-teal-400 font-medium">Virtual Tour 360° • Jelajahi Sebelum Melangkah</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ================= MODAL VIRTUAL TOUR 360 ================= -->
+  <div id="virtualTourModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md">
+    <div class="relative w-full max-w-5xl h-[85vh] bg-[#06242a] rounded-3xl border border-teal-700/60 shadow-2xl flex flex-col overflow-hidden">
+      
+      <!-- Modal Header -->
+      <div class="px-6 py-4 bg-teal-950/90 border-b border-teal-800/60 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-amber-400/20 text-amber-400 flex items-center justify-center">
+            <i data-lucide="compass" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 id="modalSceneTitle" class="text-sm sm:text-base font-bold text-white">Tur Virtual 360° Waterpark Lestari</h3>
+            <p id="modalSceneSubtitle" class="text-xs text-teal-300">Pilih titik panorama di bilah bawah</p>
+          </div>
+        </div>
+        <button onclick="closeVirtualTourModal()" class="w-9 h-9 rounded-full bg-teal-900/80 hover:bg-rose-500 text-white flex items-center justify-center transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- 360 Viewer Canvas Container -->
+      <div class="relative flex-1 bg-black overflow-hidden">
+        <div id="modalPanorama" class="w-full h-full"></div>
+
+        <!-- Hotspot hint -->
+        <div class="absolute top-4 left-4 pointer-events-none bg-slate-900/80 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-teal-700/50 text-xs text-teal-200 flex items-center gap-2">
+          <i data-lucide="move" class="w-4 h-4 text-amber-400"></i>
+          <span>Geser mouse atau sentuh layar untuk rotasi 360°</span>
+        </div>
+      </div>
+
+      <!-- Modal Bottom Scene Switcher -->
+      <div class="px-4 py-3 bg-[#04171b] border-t border-teal-800/60 flex items-center justify-center gap-2 sm:gap-3 overflow-x-auto">
+        <button onclick="loadModalScene(0)" class="modal-tab-btn active px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2">
+          <span>1. Area Depan (Teleport 360°)</span>
+        </button>
+        <button onclick="loadModalScene(1)" class="modal-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2">
+          <span>2. Area Kanan Kolam (Teleport 360°)</span>
+        </button>
+        <button onclick="loadModalScene(2)" class="modal-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2">
+          <span>3. Area Kiri Kolam (Teleport 360°)</span>
+        </button>
+        <button onclick="loadModalScene(3)" class="modal-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2">
+          <span>4. Area Gazebo & Kolam Anak (Teleport 360°)</span>
+        </button>
+        <button onclick="loadModalScene(4)" class="modal-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2">
+          <span>5. Area Tengah & Kolam Anak (Teleport 360°)</span>
+        </button>
+        <button onclick="loadModalScene(5)" class="modal-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2">
+          <span>6. Area Parkiran (Teleport 360°)</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= MODAL BOOKING TIKET ================= -->
+  <div id="bookingModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm">
+    <div class="relative w-full max-w-lg bg-[#06242a] rounded-3xl border border-teal-700/60 shadow-2xl p-6 sm:p-8 text-white max-h-[90vh] overflow-y-auto">
+      
+      <!-- Close Button -->
+      <button onclick="closeBookingModal()" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-teal-900/80 hover:bg-rose-500 text-white flex items-center justify-center transition-colors">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+
+      <!-- Modal Header -->
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-12 rounded-2xl bg-[#ffaa2b] flex items-center justify-center text-slate-950 flex-shrink-0 shadow-md">
+          <i data-lucide="ticket" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-white">Reservasi Tiket Masuk</h3>
+          <p class="text-xs text-teal-300">Waterpark Lestari • Tomoni, Luwu Timur</p>
+        </div>
+      </div>
+
+      <!-- Booking Form -->
+      <form id="bookingForm" onsubmit="submitBooking(event)" class="space-y-4 text-xs">
+        
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Nama Pemesan</label>
+          <input type="text" id="bookName" required placeholder="Contoh: Bpk. Ahmad" class="w-full bg-[#031518] border border-teal-700/60 rounded-xl px-3.5 py-2.5 text-white placeholder-slate-500 focus:outline-none focus:border-amber-400">
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">No. WhatsApp</label>
+          <input type="tel" id="bookPhone" required placeholder="08xxxxxxxxxx" class="w-full bg-[#031518] border border-teal-700/60 rounded-xl px-3.5 py-2.5 text-white placeholder-slate-500 focus:outline-none focus:border-amber-400">
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Tanggal Rencana Kunjungan</label>
+          <input type="date" id="bookDate" required onchange="calculateBookingTotal()" class="w-full bg-[#031518] border border-teal-700/60 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-amber-400">
+          <span id="dayTypeIndicator" class="inline-block mt-1 text-[11px] font-semibold text-amber-300"></span>
+        </div>
+
+        <!-- Ticket Counters -->
+        <div class="grid grid-cols-2 gap-3 pt-2">
+          <!-- Dewasa -->
+          <div class="bg-teal-950/60 border border-teal-800/60 rounded-2xl p-3.5">
+            <span class="block font-bold text-white text-xs">Tiket Dewasa</span>
+            <span id="dewasaPriceLabel" class="text-[11px] text-teal-300 font-semibold">Rp30.000 / org</span>
+            <div class="flex items-center justify-between mt-3">
+              <button type="button" onclick="adjustCount('dewasa', -1)" class="w-7 h-7 rounded-lg bg-teal-900 text-white font-bold hover:bg-amber-400 hover:text-slate-950 transition-colors">-</button>
+              <span id="dewasaCount" class="font-bold text-base text-white">1</span>
+              <button type="button" onclick="adjustCount('dewasa', 1)" class="w-7 h-7 rounded-lg bg-teal-900 text-white font-bold hover:bg-amber-400 hover:text-slate-950 transition-colors">+</button>
+            </div>
+          </div>
+
+          <!-- Anak-anak -->
+          <div class="bg-teal-950/60 border border-teal-800/60 rounded-2xl p-3.5">
+            <span class="block font-bold text-white text-xs">Tiket Anak-Anak</span>
+            <span id="anakPriceLabel" class="text-[11px] text-teal-300 font-semibold">Rp25.000 / org</span>
+            <div class="flex items-center justify-between mt-3">
+              <button type="button" onclick="adjustCount('anak', -1)" class="w-7 h-7 rounded-lg bg-teal-900 text-white font-bold hover:bg-amber-400 hover:text-slate-950 transition-colors">-</button>
+              <span id="anakCount" class="font-bold text-base text-white">0</span>
+              <button type="button" onclick="adjustCount('anak', 1)" class="w-7 h-7 rounded-lg bg-teal-900 text-white font-bold hover:bg-amber-400 hover:text-slate-950 transition-colors">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Total Breakdown -->
+        <div class="bg-[#031518] rounded-2xl p-4 border border-teal-800/60 mt-4">
+          <div class="flex justify-between items-center text-xs text-slate-300">
+            <span>Estimasi Total Pembayaran:</span>
+            <span id="totalBookingPrice" class="text-lg font-black text-amber-400">Rp30.000</span>
+          </div>
+          <p class="text-[10px] text-slate-400 mt-1">*Pembayaran dilakukan saat check-in di loket tiket masuk Waterpark Lestari.</p>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="w-full mt-4 py-3.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 transition-all">
+          <i data-lucide="message-circle" class="w-4 h-4"></i>
+          <span>Kirim Pemesanan ke WhatsApp</span>
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+
+  <!-- ================= MODAL PHOTO VIEWER ================= -->
+  <div id="photoModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm" onclick="closePhotoViewer()">
+    <div class="relative max-w-4xl max-h-[85vh]">
+      <img id="photoModalImg" src="" alt="Foto Waterpark" class="max-w-full max-h-[85vh] rounded-2xl shadow-2xl object-contain">
+      <button onclick="closePhotoViewer()" class="absolute -top-12 right-0 text-white hover:text-amber-400">
+        <i data-lucide="x" class="w-7 h-7"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Floating WhatsApp Action Pill -->
+  <a href="https://wa.me/6281347678886?text=Halo%20Waterpark%20Lestari%20Tomoni%2C%20saya%20ingin%20tanya%20informasi" target="_blank" class="fixed bottom-6 right-6 z-40 bg-emerald-500 hover:bg-emerald-400 text-white font-bold p-3.5 rounded-full shadow-2xl shadow-emerald-500/40 flex items-center gap-2 transition-all hover:scale-110" title="Chat WhatsApp +62 813-4767-8886">
+    <i data-lucide="message-circle" class="w-6 h-6"></i>
+    <span class="hidden sm:inline text-xs font-bold pr-1">Chat WA (+62 813-4767-8886)</span>
+  </a>
+
+  <!-- Script JS -->
+  <script src="script.js"></script>
+</body>
+</html>
